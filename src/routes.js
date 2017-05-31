@@ -11,4 +11,4 @@ const routes = (
   </Switch>
 )
 
-export default routes;
+export default routes

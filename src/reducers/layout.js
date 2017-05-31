@@ -14,16 +14,15 @@ const initialState = {
 export default function layout(state = initialState, action) {
   switch (action.type) {
     case LOAD_LAYOUT:
-      console.log("LOAD_LAYOUT called");
+      console.log("LOAD_LAYOUT called")
       return state
 
     case SET_VISIBILITY:
-      console.log("SET_VISIBILITY called");
+      console.log("SET_VISIBILITY called")
       return state
-      })
 
     case SET_RENDERABILITY:
-      console.log("SET_RENDERABILITY called");
+      console.log("SET_RENDERABILITY called")
       return state
 
     default:
