@@ -1,0 +1,48 @@
+{
+  "name": "react-indesign-viewer",
+  "version": "1.0.0",
+  "description": "React web viewer for interactive media projects made in Indesign using a custom exportation.",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node index",
+    "dev": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeimxx/react-indesign-viewer.git"
+  },
+  "keywords": [
+    "react",
+    "indesign",
+    "viewer"
+  ],
+  "author": "Fernando Ramos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeimxx/react-indesign-viewer/issues"
+  },
+  "homepage": "https://github.com/jeimxx/react-indesign-viewer#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "history": "^4.6.1",
+    "immutability-helper": "^2.2.2",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "react-router-redux": "^5.0.0-alpha.6",
+    "react-transition-group": "^1.1.3",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "webpack": "^2.6.1"
+  }
+}
