@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import styles from './home.css'
 
-
 class Home extends Component {
 
   render() {

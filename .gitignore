@@ -60,3 +60,6 @@ typings/
 # webpack build
 dist/css
 dist/js
+
+# Mac pls
+*.DS_Store

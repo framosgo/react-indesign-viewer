@@ -1,0 +1,14 @@
+:local .container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+:local .content {
+  flex: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}

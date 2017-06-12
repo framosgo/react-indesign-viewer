@@ -1,0 +1,11 @@
+:local .container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #737373;
+  border-left: 2px solid #737373;
+  border-right: 2px solid #737373;
+  color: #737373;
+  cursor: pointer;
+}

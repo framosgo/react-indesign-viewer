@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router'
 
 import Home from './components/Home'
-import Viewer from './components/Viewer'
+import Viewer from './containers/Viewer'
 
 const routes = (
   <Switch>

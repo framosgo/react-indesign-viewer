@@ -10,6 +10,8 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 
 import reducers from './reducers'
 import routes from './routes'
+import {} from './global.css'
+import {} from './lib/fontawesome/font-awesome.min.css'
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
