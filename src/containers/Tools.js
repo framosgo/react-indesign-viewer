@@ -19,47 +19,47 @@ const Tools = (props) => {
   const tools = [
     {
       key: 'home',
-      className: 'fa fa-home fa-lg',
+      className: 'fa fa-home',
       onClick: () => {props.goToSection(0); props.goToSubSection(0)}
     },
     {
       key: 'thumbnail',
-      className: 'fa fa-th-large fa-lg',
+      className: 'fa fa-th-large',
       onClick: () => props.showHideThumbnail()
     },
     {
       key: 'up',
-      className: 'fa fa-angle-up fa-lg',
+      className: 'fa fa-angle-up',
       onClick: ()=> props.moveSubSection(-1)
     },
     {
       key: 'left',
-      className: 'fa fa-angle-left fa-lg',
+      className: 'fa fa-angle-left',
       onClick: () => props.moveSection(-1,props.numSections-1)
     },
     {
       key: 'right',
-      className: 'fa fa-angle-right fa-lg',
+      className: 'fa fa-angle-right',
       onClick: () => props.moveSection(1,props.numSections-1)
     },
     {
       key: 'down',
-      className: 'fa fa-angle-down fa-lg',
+      className: 'fa fa-angle-down',
       onClick: () => props.moveSubSection(1)
     },
     {
       key: 'share',
-      className: 'fa fa-share-alt fa-lg',
+      className: 'fa fa-share-alt',
       onClick: () => props.share()
     },
     {
       key: 'expand',
-      className: props.isFullScreen ? 'fa fa-compress fa-lg' : 'fa fa-expand fa-lg',
+      className: props.isFullScreen ? 'fa fa-compress' : 'fa fa-expand',
       onClick: () => props.fullScreen()
     },
     {
       key: 'info',
-      className: 'fa fa-info-circle fa-lg',
+      className: 'fa fa-info-circle',
       onClick: () => props.about()
     }
   ]

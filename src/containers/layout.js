@@ -139,6 +139,7 @@ class Layout extends Component {
                 onMouseMove={(e)=> this._onMouseMove(e)}>
             <div className={styles.content}
                 style={{width: this.scaledWidth*this.sections.length,
+                        transitionDuration: this.props.allowTransition ? '1s' : '0s',
                         transform: `translate3d(-${this.props.section*this.scaledWidth + this.state.distanceX}px, 0,0)`}}>
               {this.sections}
             </div>
@@ -158,7 +159,8 @@ const add = (a) => (b) =>  a + b
 const mapStateToProps = (state, ownProps) => {
   return {
     scale: state.viewer.scale,
-    section: state.viewer.section
+    section: state.viewer.section,
+    allowTransition: state.viewer.allowTransition
   }
 }
 

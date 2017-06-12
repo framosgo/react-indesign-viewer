@@ -25,6 +25,7 @@ export default function viewer(state = initialState, action) {
     case UPDATE_SCALE:
       console.log("UPDATE_SCALE called")
       return Object.assign({}, state, {
+        allowTransition: false,
         scale: action.newScale
       })
 
@@ -41,6 +42,7 @@ export default function viewer(state = initialState, action) {
     case MOVE_SECTION:
       const newSection = state.section + action.distance
       return Object.assign({}, state, {
+        allowTransition: true,
         section: newSection < 0 ? 0 : ((newSection > action.limit) ? action.limit : newSection)
       })
 
