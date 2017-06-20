@@ -43,12 +43,13 @@ class Layout extends Component {
 
   componentDidMount() {
     this.checkScale()
-    const sectionURL = add('https://s3-eu-west-1.amazonaws.com/dssnetwork/ByCube/demo/web/config.json'.slice(0,-11))
+    const sectionURL = add(this.props.source.slice(0,-11))
     const promises = this.props.sections.map(section => fetch(sectionURL(section + '/layout.json')).then(res => res.json()))
     Promise.all(promises)
     .then(results => {
       this.props.loadSections(results)
-      this.sections = results.map((section,i) => (<Section key={section.layout.name + i} id={i} {...section.layout} />))
+      this.sections = results
+
       this.setState({
         loaded: true
       })
@@ -141,7 +142,14 @@ class Layout extends Component {
                 style={{width: this.scaledWidth*this.sections.length,
                         transitionDuration: this.props.allowTransition ? '1s' : '0s',
                         transform: `translate3d(-${this.props.section*this.scaledWidth + this.state.distanceX}px, 0,0)`}}>
-              {this.sections}
+              {this.sections.map((section,i) =>  {
+                return (
+                  <div key={section.layout.name + i}
+                      style={{height:section.layout.style.height*this.props.scale, width: section.layout.style.width*this.props.scale, backgroundColor: i%2 ? 'lightblue': 'snow'}}>
+                    <Section key={section.layout.name + i} id={i} {...section.layout} />
+                  </div>
+                )
+              })}
             </div>
           </div>
         }

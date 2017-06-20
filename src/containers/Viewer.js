@@ -16,35 +16,14 @@ class Viewer extends Component {
     this.state = {
       loaded: false
     }
+    this.mockURL = 'https://s3-eu-west-1.amazonaws.com/dssnetwork/ByCube/demo/web/config.json'
   }
 
   componentDidMount() {
-    fetch('https://s3-eu-west-1.amazonaws.com/dssnetwork/ByCube/demo/web/config.json')
-    .then((response) => {
-      return response.json()
-    })
-    .then((data) => {
-      // real data
-      // this.config = data
-
-      // mockdata
-      this.config = {
-        backgroundColor: "#333333",
-        tools: true,
-        thumbnail: true,
-        width: 1024,
-        height: 768,
-        sections: [
-          'magmaview',
-          'magmaview',
-          'magmaview',
-          'magmaview',
-          'magmaview',
-          'magmaview',
-          'magmaview',
-          'magmaview'
-        ]
-      }
+    fetch(this.mockURL)
+    .then( res => res.json() )
+    .then( data => {
+      this.config = data
       this.setState({
         loaded: true
       })
@@ -55,7 +34,7 @@ class Viewer extends Component {
     return !this.state.loaded ? <Loader /> :
       <div className={styles.container} style={{backgroundColor: this.config.backgroundColor}}>
         <div className={styles.content}>
-          <Layout {...this.config}/>
+          <Layout source={this.mockURL} {...this.config}/>
           {this.config.thumbnail && this.props.isThumbnail && <Thumbnail />}
         </div>
         {this.config.tools && <Tools numSections={this.config.sections.length}/>}
