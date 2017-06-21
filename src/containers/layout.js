@@ -4,7 +4,11 @@ import { connect } from 'react-redux'
 import {
   moveSection,
   updateScale,
-  loadSections
+  loadSections,
+  slideON,
+  slideOFF,
+  slideVertically,
+  slideHorizontally
 } from '../actions'
 
 import Section from './Section'
@@ -16,10 +20,7 @@ class Layout extends Component {
   constructor(props){
     super(props)
     this.state = {
-      loaded: false,
-      sliding: false,
-      distanceX: 0,
-      distanceY: 0
+      loaded: false
     }
     this.sections
     this.checkScale = this.checkScale.bind(this)
@@ -61,45 +62,18 @@ class Layout extends Component {
     this.mousePositionY = e.clientY
     this.maxDistanceX = this.scaledWidth*0.25
     this.maxDistanceY = this.scaledHeight*0.20
-    this.setState({
-      sliding: true,
-      distanceX: 0,
-      distanceY: 0
-    })
+    this.props.slideON()
   }
 
+
   _onMouseMove(e) {
-    if(this.state.sliding){
+    if(this.props.isSliding){
       const distanceX = this.mousePositionX - e.clientX
       const distanceY = this.mousePositionY - e.clientY
-      if((distanceX >= -this.maxDistanceX && distanceX <= this.maxDistanceX) &&
-        (distanceY >= -this.maxDistanceY && distanceY <= this.maxDistanceY)) {
-
-        if(this.state.distanceX == 0 && this.state.distanceY == 0){
-          if(Math.abs(distanceX) > Math.abs(distanceY)) {
-            this.setState({
-              distanceX: distanceX,
-              distanceY: 0
-            })
-          } else if(Math.abs(distanceX) < Math.abs(distanceY)) {
-            this.setState({
-              distanceX: 0,
-              distanceY: distanceY
-            })
-          }
-
-        } else if(Math.abs(this.state.distanceX) > Math.abs(this.state.distanceY)) {
-          this.setState({
-            distanceX: distanceX,
-            distanceY: 0
-          })
-
-        } else if(Math.abs(this.state.distanceX) < Math.abs(this.state.distanceY)) {
-          this.setState({
-            distanceX: 0,
-            distanceY: distanceY
-          })
-        }
+      if( Math.abs(distanceX) <= this.maxDistanceX ){
+        this.props.slideHorizontally(distanceX)
+      } else if( Math.abs(distanceY) <= this.maxDistanceY ){
+        this.props.slideVertically(distanceY)
       }
     }
   }
@@ -107,41 +81,31 @@ class Layout extends Component {
   _onMouseUp(e) {
     const distanceX = this.mousePositionX - e.clientX
     const distanceY = this.mousePositionY - e.clientY
-    if(this.state.distanceX != 0 && this.state.distanceY == 0){
+    if(this.props.isSliding){
       if(distanceX >= this.maxDistanceX){
         this.props.moveSection(1,this.props.sections.length-1)
       } else if(distanceX <= -this.maxDistanceX){
         this.props.moveSection(-1,this.props.sections.length-1)
       }
-    } else if(this.state.distanceY != 0 && this.state.distanceX == 0){
-      // if(distanceY >= this.maxDistanceY){
-      //   this.onArrowDown()
-      // } else if(distanceY <= -this.maxDistanceY){
-      //   this.onArrowUp()
-      // }
+      this.props.slideOFF()
     }
-    this.setState({
-      sliding: false,
-      distanceX: 0,
-      distanceY: 0
-    })
   }
 
   render() {
     this.scaledHeight = this.props.height*this.props.scale
     this.scaledWidth = this.props.width*this.props.scale
     return (
-      <div className={styles.container} ref={(layout)=> {this.layout = layout}}
-            onMouseUp={(e)=>{this._onMouseUp(e)}}
-            onMouseLeave={(e)=>{this._onMouseUp(e)}}>
+      <div className={styles.container} ref={ layout => {this.layout = layout} }
+            onMouseUp={this._onMouseUp}
+            onMouseLeave={this._onMouseUp}>
         {!this.state.loaded ? <Loader /> :
           <div style={{height: this.scaledHeight, width: this.scaledWidth}}
-                onMouseDown={(e)=> this._onMouseDown(e)}
-                onMouseMove={(e)=> this._onMouseMove(e)}>
+                onMouseDown={this._onMouseDown}
+                onMouseMove={this._onMouseMove}>
             <div className={styles.content}
                 style={{width: this.scaledWidth*this.sections.length,
-                        transitionDuration: this.props.allowTransition ? '1s' : '0s',
-                        transform: `translate3d(-${this.props.section*this.scaledWidth + this.state.distanceX}px, 0,0)`}}>
+                        transitionDuration: this.props.transitionDuration,
+                        transform: `translate3d(-${this.props.section*this.scaledWidth + this.props.distanceX}px, 0,0)`}}>
               {this.sections.map((section,i) =>  {
                 return (
                   <div key={section.layout.name + i}
@@ -168,15 +132,21 @@ const mapStateToProps = (state, ownProps) => {
   return {
     scale: state.viewer.scale,
     section: state.viewer.section,
-    allowTransition: state.viewer.allowTransition
+    isSliding: state.viewer.isSliding,
+    distanceX: state.viewer.distanceX,
+    transitionDuration: state.viewer.transitionDuration
   }
 }
 
 const mapDispatchtoProps = (dispatch, ownProps) => {
   return {
+    slideON: () => dispatch(slideON()),
+    slideHorizontally: distance => dispatch(slideHorizontally(distance)),
+    slideVertically: distance => dispatch(slideVertically(distance)),
+    slideOFF: () => dispatch(slideOFF()),
     moveSection: (section,limit) => dispatch(moveSection(section,limit)),
-    updateScale: (newScale) => dispatch(updateScale(newScale)),
-    loadSections: (sections) => dispatch(loadSections(sections))
+    updateScale: newScale => dispatch(updateScale(newScale)),
+    loadSections: sections => dispatch(loadSections(sections))
   }
 }
 

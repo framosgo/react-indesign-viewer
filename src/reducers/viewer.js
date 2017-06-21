@@ -5,6 +5,10 @@ import {
   MOVE_SECTION,
   GO_TO_SUB_SECTION,
   MOVE_SUB_SECTION,
+  SLIDE_ON,
+  SLIDE_HORIZONTALLY,
+  SLIDE_VERTICALLY,
+  SLIDE_OFF,
   FULL_SCREEN,
   SHARE,
   ABOUT
@@ -17,7 +21,9 @@ const initialState = {
   isThumbnail: false,
   isFullScreen: false,
   sharing: false,
-  about: false
+  about: false,
+  isSliding: false,
+  transitionDuration: '0s'
 }
 
 export default function viewer(state = initialState, action) {
@@ -25,7 +31,7 @@ export default function viewer(state = initialState, action) {
     case UPDATE_SCALE:
       console.log("UPDATE_SCALE called")
       return Object.assign({}, state, {
-        allowTransition: false,
+        transitionDuration: '0s',
         scale: action.newScale
       })
 
@@ -42,7 +48,7 @@ export default function viewer(state = initialState, action) {
     case MOVE_SECTION:
       const newSection = state.section + action.distance
       return Object.assign({}, state, {
-        allowTransition: true,
+        transitionDuration: '1s',
         section: newSection < 0 ? 0 : ((newSection > action.limit) ? action.limit : newSection)
       })
 
@@ -54,6 +60,32 @@ export default function viewer(state = initialState, action) {
     case MOVE_SUB_SECTION:
       return Object.assign({}, state, {
         subSection: state.subSection + action.distance
+      })
+
+    case SLIDE_ON:
+      return Object.assign({}, state, {
+        isSliding: true,
+        transitionDuration: '0s',
+        distanceX: 0,
+        distanceY: 0
+      })
+
+    case SLIDE_HORIZONTALLY:
+      return Object.assign({}, state, {
+        distanceX: action.distance
+      })
+
+    case SLIDE_VERTICALLY:
+      return Object.assign({}, state, {
+        distanceY: action.distance
+      })
+
+    case SLIDE_OFF:
+      return Object.assign({}, state, {
+        isSliding: false,
+        transitionDuration: '1s',
+        distanceX: 0,
+        distanceY: 0
       })
 
     case FULL_SCREEN:

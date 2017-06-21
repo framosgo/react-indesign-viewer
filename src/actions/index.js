@@ -21,6 +21,14 @@ export const GO_TO_SUB_SECTION = 'GO_TO_SUB_SECTION'
 
 export const MOVE_SUB_SECTION = 'MOVE_SUB_SECTION'
 
+export const SLIDE_ON = 'SLIDE_ON'
+
+export const SLIDE_HORIZONTALLY = 'SLIDE_HORIZONTALLY'
+
+export const SLIDE_VERTICALLY = 'SLIDE_VERTICALLY'
+
+export const SLIDE_OFF = 'SLIDE_OFF'
+
 export const FULL_SCREEN = 'FULL_SCREEN'
 
 export const SHARE = 'SHARE'
@@ -66,6 +74,22 @@ export function goToSubSection(subSection){
 
 export function moveSubSection(distance, limit) {
   return { type: MOVE_SUB_SECTION, distance, limit }
+}
+
+export function slideON() {
+  return { type: SLIDE_ON }
+}
+
+export function slideVertically(distance) {
+  return { type: SLIDE_VERTICALLY, distance }
+}
+
+export function slideHorizontally(distance) {
+  return { type: SLIDE_HORIZONTALLY, distance }
+}
+
+export function slideOFF() {
+  return { type: SLIDE_OFF }
 }
 
 export function fullScreen(){
