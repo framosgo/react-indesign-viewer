@@ -88,8 +88,8 @@ export function slideHorizontally(distance) {
   return { type: SLIDE_HORIZONTALLY, distance }
 }
 
-export function slideOFF() {
-  return { type: SLIDE_OFF }
+export function slideOFF(horizontal, vertical) {
+  return { type: SLIDE_OFF, horizontal, vertical }
 }
 
 export function fullScreen(){

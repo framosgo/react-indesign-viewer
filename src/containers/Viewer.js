@@ -34,7 +34,7 @@ class Viewer extends Component {
     return !this.state.loaded ? <Loader /> :
       <div className={styles.container} style={{backgroundColor: this.config.backgroundColor}}>
         <div className={styles.content}>
-          <Layout source={this.mockURL} {...this.config}/>
+          <Layout source={this.mockURL} {...this.config} />
           {this.config.thumbnail && this.props.isThumbnail && <Thumbnail />}
         </div>
         {this.config.tools && <Tools numSections={this.config.sections.length}/>}

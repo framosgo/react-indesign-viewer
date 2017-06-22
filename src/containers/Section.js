@@ -44,9 +44,9 @@ export default class Section extends Component {
 
   createComponent(element,j) {
     let NewComponent
-    if( element.type == 'Image' || (element.type == 'Group' && element.source) ){
+    if( element.format ){
       NewComponent = Image
-    } else{
+    } else {
       NewComponent = Rectangle
     }
     const { name, bounds, style, animation, ...res } = element
@@ -64,6 +64,15 @@ export default class Section extends Component {
       <div id="Section" style={{height: '100%', width: '100%', position:'relative'}}>
         {this.section}
       </div>
+      /*
+      <div style={{height:this.props.style.height*this.props.scale,
+                  width: this.props.style.width*this.props.scale,
+                  position:'relative',
+                  transitionDuration: this.props.transitionDuration,
+                  transform: `translate3d(0,-${this.props.subSection + this.props.distanceX}px,0)` }}>
+        {this.section}
+      </div>
+      */
     )
   }
 }
@@ -71,10 +80,9 @@ export default class Section extends Component {
 /*
 const mapStateToProps = (state, ownProps) => {
   return {
-    scale: state.viewer.scale,
-    isCurrent: state.viewer.section === ownProps.id,
-    visible: state.layout.sections[ownProps.id].visible,
-    renderable: state.layout.sections[ownProps.id].renderable
+    scale: state.viewer.scale
+    subSection: state.viewer.subSection,
+    distanceY: state.viewer.distanceY
   }
 }
 

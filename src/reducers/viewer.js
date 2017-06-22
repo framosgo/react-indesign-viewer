@@ -23,7 +23,9 @@ const initialState = {
   sharing: false,
   about: false,
   isSliding: false,
-  transitionDuration: '0s'
+  transitionDuration: '0s',
+  distanceX: 0,
+  distanceY: 0
 }
 
 export default function viewer(state = initialState, action) {
@@ -46,10 +48,10 @@ export default function viewer(state = initialState, action) {
       })
 
     case MOVE_SECTION:
-      const newSection = state.section + action.distance
+      console.log('MOVE_SECTION');
       return Object.assign({}, state, {
         transitionDuration: '1s',
-        section: newSection < 0 ? 0 : ((newSection > action.limit) ? action.limit : newSection)
+        section: (state.section + action.distance) < 0 ? 0 : (((state.section + action.distance) > action.limit) ? action.limit : state.section + action.distance)
       })
 
     case GO_TO_SUB_SECTION:
@@ -81,9 +83,20 @@ export default function viewer(state = initialState, action) {
       })
 
     case SLIDE_OFF:
+      let newSection = state.section
+      let newSubSection = state.subSection
+
+      if(action.horizontal){
+        newSection = applyLimit(state.section, action.horizontal.move, action.horizontal.limit)
+      } else if(action.vertical){
+        newSubSection = applyLimit(state.subSection, action.vertical.move, action.vertical.limit)
+      }
+
       return Object.assign({}, state, {
+        transitionDuration: ((state.section != newSection) || (state.subSection != newSubSection)) ? '1s' : '0.5s',
+        section: newSection,
+        subSection: newSubSection,
         isSliding: false,
-        transitionDuration: '1s',
         distanceX: 0,
         distanceY: 0
       })
@@ -107,4 +120,9 @@ export default function viewer(state = initialState, action) {
       state
   }
   return state;
+}
+
+const applyLimit = (current, distance, limit) => {
+  const res = current - (distance>0 ? 1 : -1)
+  return res < 0 ? 0 : ((res > limit) ? limit : res)
 }
